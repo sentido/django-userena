@@ -25,6 +25,17 @@ ASSIGNED_PERMISSIONS = {
          ('delete_user', 'Can delete user'))
 }
 
+
+def grant_own_profile_permissions(user, user_profile):
+    # Give permissions to view and change profile
+    for perm in ASSIGNED_PERMISSIONS['profile']:
+        assign(perm[0], user, user_profile)
+
+    # Give permissions to view and change itself
+    for perm in ASSIGNED_PERMISSIONS['user']:
+        assign(perm[0], user, user)
+
+
 class UserenaManager(UserManager):
     """ Extra functionality for the Userena model. """
 
@@ -70,13 +81,7 @@ class UserenaManager(UserManager):
             new_profile = profile_model(user=new_user)
             new_profile.save(using=self._db)
 
-        # Give permissions to view and change profile
-        for perm in ASSIGNED_PERMISSIONS['profile']:
-            assign(perm[0], new_user, new_profile)
-
-        # Give permissions to view and change itself
-        for perm in ASSIGNED_PERMISSIONS['user']:
-            assign(perm[0], new_user, new_user)
+        grant_own_profile_permissions(new_user, new_profile)
 
         if send_email:
             userena_profile.send_activation_email()
