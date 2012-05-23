@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-22 17:32+0300\n"
-"PO-Revision-Date: 2012-05-22 17:56\n"
-"Last-Translator:    <boris@sentido.bg>\n"
+"PO-Revision-Date: 2012-05-23 22:05\n"
+"Last-Translator:   <boris@tix.bg>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: forms.py:33 forms.py:153 templates/userena/profile_detail.html:34
 msgid "Email"
-msgstr "Email"
+msgstr "Електронна поща"
 
 #: forms.py:36
 msgid "Create password"
@@ -52,12 +52,14 @@ msgstr "Потребителското име не е разрешено"
 #: forms.py:61 forms.py:195
 msgid "This email is already in use. Please supply a different email."
 msgstr ""
-"Този email адрес вече се изпозлва. Моля, въведете друг email адрес, или "
-"използвайте \"Забравена парола\"."
+"Тази електронна поща вече се изпозлва. Моля, въведете друга електронна поща,"
+" или използвайте \"Забравена парола\"."
 
 #: forms.py:73
 msgid "The two password fields didn't match."
 msgstr ""
+"Въведената парола не съвпада с полето за потвърждение на паролата. Моля, "
+"въведете една и съща парола в двете полета."
 
 #: forms.py:117
 msgid "I have read and agree to the Terms of Service"
@@ -79,11 +81,11 @@ msgstr "%(error)s"
 
 #: forms.py:141
 msgid "Email or username"
-msgstr "Потребителско име или email"
+msgstr "Потребителско име или електронна поща"
 
 #: forms.py:142
 msgid "Either supply us with your email or username."
-msgstr "Моля въведете потребителско име или email"
+msgstr "Моля въведете потребителско име или електронна поща"
 
 #: forms.py:143
 msgid "Password"
@@ -96,21 +98,23 @@ msgstr "Запомни ме за %(days)s дни"
 
 #: forms.py:154
 msgid "Please supply your email."
-msgstr ""
+msgstr "Моля, въведете Вашата електронна поща"
 
 #: forms.py:169
 msgid ""
 "Please enter a correct username or email and password. Note that both fields"
 " are case-sensitive."
 msgstr ""
+"Моля, въведете коректни потребителско име / електронна поща и парола. Имайте"
+" предвид, че и двете полета правят разлика между малки и големи букви."
 
 #: forms.py:175 templates/userena/email_confirm_complete.html:6
 msgid "New email"
-msgstr ""
+msgstr "Нова електронна поща"
 
 #: forms.py:193
 msgid "You're already known under this email."
-msgstr ""
+msgstr "Вие вече използвате тази електронна поща."
 
 #: forms.py:209
 msgid "First name"
@@ -123,69 +127,73 @@ msgstr "Фамилия"
 #: managers.py:233
 #, python-format
 msgid "No profile found for %(username)s"
-msgstr ""
+msgstr "Не е намерен профил на %(username)s"
 
 #: models.py:46 tests/profiles/models.py:18 tests/profiles/models.py:32
 msgid "user"
-msgstr ""
+msgstr "потребител"
 
 #: models.py:49
 msgid "last active"
-msgstr ""
+msgstr "последно активен"
 
 #: models.py:52
 msgid "The last date that the user was active."
-msgstr ""
+msgstr "Последната дата, на която потребителят е бил активен"
 
 #: models.py:54
 msgid "activation key"
-msgstr ""
+msgstr "ключ за активация"
 
 #: models.py:58
 msgid "notification send"
-msgstr ""
+msgstr "изпратена нотификация"
 
 #: models.py:60
 msgid ""
 "Designates whether this user has already got a notification about activating"
 " their account."
 msgstr ""
+"Определя дали този потребител вече е получил нотификация за активиране на "
+"акаунта."
 
 #: models.py:62
 msgid "unconfirmed email address"
-msgstr ""
+msgstr "непотвърден адрес на електронна поща"
 
 #: models.py:64
 msgid "Temporary email address when the user requests an email change."
 msgstr ""
+"Временен адрес на електронна поща когато потребителят е заявил смяна на "
+"електронната поща."
 
 #: models.py:66
 msgid "unconfirmed email verification key"
-msgstr ""
+msgstr "непотвърден ключ за верификация на електронна поща"
 
 #: models.py:70
 msgid "creation date of email confirmation key"
-msgstr ""
+msgstr "дата на създаване на ключ за верификация на електронна поща"
 
 #: models.py:78
 msgid "userena registration"
-msgstr ""
+msgstr "регистрация"
 
 #: models.py:79
 msgid "userena registrations"
-msgstr ""
+msgstr "регистрации"
 
 #: models.py:203
 msgid "Open"
-msgstr ""
+msgstr "Отворен"
 
 #: models.py:204
 msgid "Registered"
-msgstr ""
+msgstr "Регистриран"
 
 #: models.py:205
 msgid "Closed"
-msgstr ""
+msgstr "Затворен"
 
 #: models.py:212
 msgid "mugshot"
@@ -197,16 +205,16 @@ msgstr "Снимка, която се показва в профила Ви."
 
 #: models.py:218
 msgid "privacy"
-msgstr ""
+msgstr "лична сигурност"
 
 #: models.py:222
 msgid "Designates who can view your profile."
-msgstr ""
+msgstr "Определя кой може да разглежда Вашият профил."
 
 #: models.py:301
 #, python-format
 msgid "%(first_name)s %(last_name)s"
-msgstr ""
+msgstr "%(first_name)s %(last_name)s"
 
 #: models.py:363
 msgid "language"
@@ -214,11 +222,11 @@ msgstr "език"
 
 #: settings.py:39
 msgid "a month"
-msgstr ""
+msgstr "месец"
 
 #: views.py:186
 msgid "Your account has been activated and you have been signed in."
-msgstr ""
+msgstr "Вашият профил бе активиран и Вие успешно влязохте в портала."
 
 #: views.py:343
 msgid "You have been signed in."
@@ -243,188 +251,194 @@ msgstr "Дата/час"
 #: contrib/umessages/fields.py:56
 #, python-format
 msgid "The following usernames are incorrect: %(users)s."
-msgstr ""
+msgstr "Следните потребителски имена са некоректни: %(users)s."
 
 #: contrib/umessages/forms.py:10
 msgid "To"
-msgstr ""
+msgstr "До"
 
 #: contrib/umessages/forms.py:11
 msgid "Message"
-msgstr ""
+msgstr "Съобщение"
 
 #: contrib/umessages/models.py:17
 msgid "from user"
-msgstr ""
+msgstr "от потребител"
 
 #: contrib/umessages/models.py:20
 msgid "to user"
-msgstr ""
+msgstr "до потребител"
 
 #: contrib/umessages/models.py:24
 msgid "latest message"
-msgstr ""
+msgstr "последно съобщение"
 
 #: contrib/umessages/models.py:31
 msgid "contact"
-msgstr ""
+msgstr "контакт"
 
 #: contrib/umessages/models.py:32
 msgid "contacts"
-msgstr ""
+msgstr "контакти"
 
 #: contrib/umessages/models.py:35
 #, python-format
 msgid "%(from_user)s and %(to_user)s"
-msgstr ""
+msgstr "%(from_user)s и %(to_user)s"
 
 #: contrib/umessages/models.py:61 contrib/umessages/models.py:77
 msgid "recipient"
-msgstr ""
+msgstr "получател"
 
 #: contrib/umessages/models.py:64 contrib/umessages/models.py:112
 msgid "message"
-msgstr ""
+msgstr "съобщение"
 
 #: contrib/umessages/models.py:66
 msgid "read at"
-msgstr ""
+msgstr "прочетено на"
 
 #: contrib/umessages/models.py:70
 msgid "recipient deleted at"
-msgstr ""
+msgstr "получателят е изтрит на"
 
 #: contrib/umessages/models.py:78 contrib/umessages/models.py:99
 msgid "recipients"
-msgstr ""
+msgstr "получатели"
 
 #: contrib/umessages/models.py:81
 #, python-format
 msgid "%(message)s"
-msgstr ""
+msgstr "%(message)s"
 
 #: contrib/umessages/models.py:90
 msgid "body"
-msgstr ""
+msgstr "текст"
 
 #: contrib/umessages/models.py:94
 msgid "sender"
-msgstr ""
+msgstr "изпращач"
 
 #: contrib/umessages/models.py:101
 msgid "sent at"
-msgstr ""
+msgstr "изпратено на"
 
 #: contrib/umessages/models.py:104
 msgid "sender deleted at"
-msgstr ""
+msgstr "изпращачът е изтрит на "
 
 #: contrib/umessages/models.py:113
 msgid "messages"
-msgstr ""
+msgstr "съобщения"
 
 #: contrib/umessages/views.py:178
 msgid "Message is sent."
-msgstr ""
+msgstr "Съобщениет е изпратено"
 
 #: contrib/umessages/views.py:262
 msgid "Message is succesfully restored."
 msgid_plural "Messages are succesfully restored."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Съобщенията са възстановени успешно."
+msgstr[1] "Съобщението е възстановено успешно."
 
 #: contrib/umessages/views.py:266
 msgid "Message is successfully removed."
 msgid_plural "Messages are successfully removed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Съобщенията са изтрити успешно."
+msgstr[1] "Съобщението е изтрито успешно."
 
 #: contrib/umessages/templates/umessages/message_detail.html:4
 #, python-format
 msgid "Conversation with %(recipient)s"
-msgstr ""
+msgstr "Разговор с %(recipient)s"
 
 #: contrib/umessages/templates/umessages/message_detail.html:12
 #, python-format
 msgid "Received on %(sent_at)s"
-msgstr ""
+msgstr "Получено на %(sent_at)s"
 
 #: contrib/umessages/templates/umessages/message_form.html:4
 #: contrib/umessages/templates/umessages/message_list.html:9
 msgid "Compose"
-msgstr ""
+msgstr "Напиши"
 
 #: contrib/umessages/templates/umessages/message_form.html:10
 msgid "Compose message"
-msgstr ""
+msgstr "Напиши съобщение"
 
 #: contrib/umessages/templates/umessages/message_form.html:13
 msgid "Send"
-msgstr ""
+msgstr "Изпрати"
 
 #: contrib/umessages/templates/umessages/message_list.html:4
 msgid "Messages"
-msgstr ""
+msgstr "Съобщения"
 
 #: contrib/umessages/templates/umessages/message_list.html:8
 #, python-format
 msgid "%(unread_message_count)s new messages."
-msgstr ""
+msgstr "%(unread_message_count)s нови съобщения."
 
 #: contrib/umessages/templates/umessages/message_list.html:20
 #, python-format
 msgid "%(latest_message)s (%(unread_between_count)s new)"
-msgstr ""
+msgstr "%(latest_message)s (%(unread_between_count)s нови)"
 
 #: templates/userena/activate_fail.html:4
 msgid "Account activation failed."
-msgstr ""
+msgstr "Неуспешен опит за активиране на профил."
 
 #: templates/userena/activate_fail.html:5
 msgid "Your account could not be activated..."
-msgstr ""
+msgstr "Вашият профил не може да бъде активиран..."
 
 #: templates/userena/activate_fail.html:8
 msgid ""
 "Your account could not be activated. This could be because your activation "
 "link has aged."
 msgstr ""
+"Вашият профил не може да бъде активиран. Възможно е изтекъл срокът за "
+"активиране."
 
 #: templates/userena/activate_fail.html:9
 msgid ""
 "Please try signing up again or contact us if you think something went wrong."
 msgstr ""
+"Моля, опитайте да влезете отново или се свържете с нас, ако смятате, че има "
+"проблем."
 
 #: templates/userena/disabled.html:4
 msgid "Disabled account"
-msgstr ""
+msgstr "Профилът е неактивен."
 
 #: templates/userena/disabled.html:5
 msgid "Your account has been disabled"
-msgstr ""
+msgstr "Вашият профил е деактивиран."
 
 #: templates/userena/disabled.html:7
 msgid "It seems your account has been disabled."
-msgstr ""
+msgstr "Вашият профил е деактивиран."
 
 #: templates/userena/disabled.html:8
 msgid ""
 "If you feel that injustice has been done to you, feel free to contact the "
 "administrators to find out why"
 msgstr ""
+"Ако считате, че има проблем, моля свържете се с нас за отстраняване на "
+"проблема."
 
 #: templates/userena/email_change_complete.html:4
 msgid "Email verification"
-msgstr "Потвърждение на email"
+msgstr "Потвърждение на електронна поща"
 
 #: templates/userena/email_change_complete.html:5
 msgid "Confirm your new email"
-msgstr "Потвърдете Вашият нов email"
+msgstr "Потвърдете Вашата нова електронна поща"
 
 #: templates/userena/email_change_complete.html:8
 #, python-format
 msgid "You have received an email at %(email)s."
-msgstr "Вие получихте email на %(email)s."
+msgstr "Вие получихте електронна поща на %(email)s."
 
 #: templates/userena/email_change_complete.html:9
 #, python-format
@@ -432,10 +446,12 @@ msgid ""
 "To associate this email address with your account (%(username)s) click on "
 "the link provided in this email."
 msgstr ""
+"За да свържете тази електронна поща с вашия профил (%(username)s), моля "
+"щракнете на линка."
 
 #: templates/userena/email_confirm_complete.html:4
 msgid "Email changed!"
-msgstr ""
+msgstr "Електронната поща е променена успешно."
 
 #: templates/userena/email_confirm_complete.html:8
 #, python-format
@@ -443,25 +459,27 @@ msgid ""
 "Your new email address is saved. You can continue using %(site)s with this "
 "email."
 msgstr ""
+"Вашата нова електронна поща е запазена. Можете да продължите да използвате "
+"%(site)s с тази електронна поща."
 
 #: templates/userena/email_confirm_fail.html:4
 msgid "Email verification failed."
-msgstr ""
+msgstr "Неуспешна верификация на електронна поща."
 
 #: templates/userena/email_confirm_fail.html:5
 #: templates/userena/email_confirm_fail.html:8
 msgid "Your email could not be verified..."
-msgstr ""
+msgstr "Вашата електронна поща не може да бъде верифицирана..."
 
 #: templates/userena/email_confirm_fail.html:9
 msgid "You could try changing it again in your account settings."
-msgstr ""
+msgstr "Може да опитате да я смените отново в настройките на Вашия профил."
 
 #: templates/userena/email_form.html:4 templates/userena/password_form.html:6
 #: templates/userena/profile_form.html:6
 #, python-format
 msgid "Account &raquo; %(username)s"
-msgstr ""
+msgstr "Профил &raquo; %(username)s"
 
 #: templates/userena/email_form.html:9 templates/userena/password_form.html:11
 #: templates/userena/profile_detail.html:15
@@ -492,7 +510,7 @@ msgstr "Промяна на email"
 
 #: templates/userena/email_form.html:16
 msgid "Change email address"
-msgstr ""
+msgstr "Смяна на електронна поща"
 
 #: templates/userena/password_complete.html:4
 msgid "Password changed"
@@ -504,7 +522,7 @@ msgstr "Вашата парола е променена успешно"
 
 #: templates/userena/password_complete.html:8
 msgid "From now on you can use your new password to signin"
-msgstr ""
+msgstr "Вече можете да използвате новата си парола, за да влезете."
 
 #: templates/userena/password_form.html:17
 msgid "Change Password"
@@ -529,23 +547,23 @@ msgstr ""
 #: templates/userena/password_reset_confirm_form.html:13
 #: templates/userena/password_reset_form.html:4
 msgid "Reset password"
-msgstr ""
+msgstr "Възстановяване на парола"
 
 #: templates/userena/password_reset_confirm_form.html:9
 #: templates/userena/password_reset_form.html:9
 msgid "Reset Password"
-msgstr ""
+msgstr "Възстановяване на парола"
 
 #: templates/userena/password_reset_done.html:4
 #: templates/userena/password_reset_done.html:5
 msgid "Password reset email sent"
-msgstr "Изпратен е email за възстановяване на забравена парола."
+msgstr "Изпратена е електронна поща за възстановяване на забравена парола."
 
 #: templates/userena/password_reset_done.html:8
 msgid ""
 "An e-mail has been sent to you which explains how to reset your password."
 msgstr ""
-"В email съобщението ще получите подробни указания как да възстановите "
+"В електронната поща ще получите подробни указания как да възстановите "
 "паролата си за портала."
 
 #: templates/userena/password_reset_form.html:13
@@ -587,7 +605,7 @@ msgstr "За мен"
 
 #: templates/userena/profile_form.html:4
 msgid "Account setup"
-msgstr ""
+msgstr "Настройки на профил"
 
 #: templates/userena/profile_form.html:19
 msgid "Edit Profile"
@@ -658,7 +676,7 @@ msgstr "Благодарим Ви, че се регистрирахте."
 msgid ""
 "You have been sent an e-mail with an activation link to the supplied email."
 msgstr ""
-"На посочения email адрес Ви изпратихме съобщение, съдържащо линк за "
+"На посочената електронна поща Ви изпратихме съобщение, съдържащо линк за "
 "активиране на Вашия профил."
 
 #: templates/userena/signup_complete.html:13
@@ -672,7 +690,8 @@ msgstr ""
 
 #: templates/userena/signup_complete.html:15
 msgid "You can now use the supplied credentials to signin."
-msgstr "Можете да влезете в портала с посочените от Вас email и парола"
+msgstr ""
+"Можете да влезете в портала с посочените от Вас електронна поща и парола"
 
 #: tests/profile.py:6 tests/profiles/models.py:12
 msgid "Male"
