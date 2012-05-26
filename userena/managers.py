@@ -229,7 +229,7 @@ class UserenaManager(UserManager):
                                               codename=perm[0],
                                               content_type=model_content_type)
 
-        # it is safe to rely on settings.ANONYMOUS_USER_ID since it is a requirement of 
+        # it is safe to rely on settings.ANONYMOUS_USER_ID since it is a requirement of
         # django-guardian
         for user in User.objects.exclude(id=settings.ANONYMOUS_USER_ID):
             try:
