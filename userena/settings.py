@@ -65,7 +65,7 @@ USERENA_MUGSHOT_SIZE = getattr(settings,
 
 USERENA_MUGSHOT_CROP_TYPE = getattr(settings,
                                     'USERENA_MUGSHOT_CROP_TYPE',
-                                    'smart')
+                                    'scale')
 
 USERENA_MUGSHOT_PATH = getattr(settings,
                                'USERENA_MUGSHOT_PATH',
