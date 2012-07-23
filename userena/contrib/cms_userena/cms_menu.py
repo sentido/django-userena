@@ -25,14 +25,6 @@ class UserenaMenu(CMSAttachMenu):
         nodes = []
 
         nodes.append(NavigationNode(
-                        title=_(u"Personal messages"),
-                        url="#", # will be replaced in the modifier with current user's URL
-                        id="userena-messages",
-                        attr={'is_userena': True, 'view_name': ''},
-                    )
-        )
-
-        nodes.append(NavigationNode(
                         title=_(u"Edit profile"),
                         url="#", # will be replaced in the modifier with current user's URL
                         id="userena-profile-edit",
