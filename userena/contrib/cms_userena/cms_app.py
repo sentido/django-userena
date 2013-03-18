@@ -27,9 +27,9 @@ class UserenaApphook(CMSApp):
         # "url_name" : { dict of view's default_args overrides. see documentation for more detail }
     }
 
-    @classproperty
+
     @classmethod
-    def urls(cls):
+    def get_urls(cls):
         """
         Returns the standard urls from userena.urls.
         You can easity customize the URLs (for example - signup form) by extending the class
@@ -51,6 +51,8 @@ class UserenaApphook(CMSApp):
             ),
             userena_urlpatterns
         ]
+
+    urls = classproperty(get_urls)
 
 
 if USERENA_CMS_AUTO_REGISTER_APPHOOK:
