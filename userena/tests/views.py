@@ -1,12 +1,15 @@
 from django.core.urlresolvers import reverse
 from django.core import mail
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
 
 from userena import forms
 from userena import settings as userena_settings
 from userena.tests.profiles.test import ProfileTestCase
+from userena.utils import get_user_model
+
+User = get_user_model()
+
 
 class UserenaViewsTests(ProfileTestCase):
     """ Test the account views """
@@ -23,8 +26,7 @@ class UserenaViewsTests(ProfileTestCase):
                                'tos': 'on'})
         user = User.objects.get(email='alice@example.com')
         response = self.client.get(reverse('userena_activate',
-                                           kwargs={'username': user.username,
-                                                   'activation_key': user.userena_signup.activation_key}))
+                                           kwargs={'activation_key': user.userena_signup.activation_key}))
         self.assertRedirects(response,
                              reverse('userena_profile_detail', kwargs={'username': user.username}))
 
@@ -37,8 +39,7 @@ class UserenaViewsTests(ProfileTestCase):
 
         """
         response = self.client.get(reverse('userena_activate',
-                                           kwargs={'username': 'john',
-                                                   'activation_key': 'fake'}))
+                                           kwargs={'activation_key': 'fake'}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
                                 'userena/activate_fail.html')
@@ -50,8 +51,7 @@ class UserenaViewsTests(ProfileTestCase):
         user.userena_signup.change_email('johnie@example.com')
 
         response = self.client.get(reverse('userena_email_confirm',
-                                           kwargs={'username': user.username,
-                                                   'confirmation_key': user.userena_signup.email_confirmation_key}))
+                                           kwargs={'confirmation_key': user.userena_signup.email_confirmation_key}))
 
         self.assertRedirects(response,
                              reverse('userena_email_confirm_complete', kwargs={'username': user.username}))
@@ -62,8 +62,7 @@ class UserenaViewsTests(ProfileTestCase):
 
         """
         response = self.client.get(reverse('userena_email_confirm',
-                                           kwargs={'username': 'john',
-                                                   'confirmation_key': 'WRONG'}))
+                                           kwargs={'confirmation_key': 'WRONG'}))
         self.assertTemplateUsed(response,
                                 'userena/email_confirm_fail.html')
 
@@ -132,6 +131,47 @@ class UserenaViewsTests(ProfileTestCase):
         # Check for new user.
         self.assertEqual(User.objects.filter(email__iexact='alice@example.com').count(), 1)
 
+    def test_signup_view_with_signin(self):
+        """
+        After a ``POST`` to the ``signup`` view a new user should be created,
+        the user should be logged in and redirected to the signup success page.
+
+        """
+        # If activation is required, user is not logged in after signup,
+        # disregarding USERENA_SIGNIN_AFTER_SIGNUP setting
+        userena_settings.USERENA_SIGNIN_AFTER_SIGNUP = True
+        userena_settings.USERENA_ACTIVATION_REQUIRED = True
+        response = self.client.post(reverse('userena_signup'),
+                                    data={'username': 'alice',
+                                          'email': 'alice@example.com',
+                                          'password1': 'blueberry',
+                                          'password2': 'blueberry',
+                                          'tos': 'on'})
+        # Immediate reset to default to avoid leaks
+        userena_settings.USERENA_SIGNIN_AFTER_SIGNUP = False
+        userena_settings.USERENA_ACTIVATION_REQUIRED = True
+
+        response_check = self.client.get(reverse('userena_profile_edit',
+                                                 kwargs={'username': 'alice'}))
+        self.assertEqual(response_check.status_code, 403)
+
+        userena_settings.USERENA_SIGNIN_AFTER_SIGNUP = True
+        userena_settings.USERENA_ACTIVATION_REQUIRED = False
+        response = self.client.post(reverse('userena_signup'),
+                                    data={'username': 'johndoe',
+                                          'email': 'johndoe@example.com',
+                                          'password1': 'blueberry',
+                                          'password2': 'blueberry',
+                                          'tos': 'on'})
+        # Immediate reset to default to avoid leaks
+        userena_settings.USERENA_SIGNIN_AFTER_SIGNUP = False
+        userena_settings.USERENA_ACTIVATION_REQUIRED = True
+
+        # Kind of hackish way to check if the user is logged in
+        response_check = self.client.get(reverse('userena_profile_edit',
+                                           kwargs={'username': 'johndoe'}))
+        self.assertEqual(response_check.status_code, 200)
+
     def test_signin_view(self):
         """ A ``GET`` to the signin view should render the correct form """
         response = self.client.get(reverse('userena_signin'))
@@ -198,6 +238,18 @@ class UserenaViewsTests(ProfileTestCase):
                                           'password': 'blowfish',
                                           'next': '/accounts/'})
         self.assertRedirects(response, '/accounts/')
+
+    def test_signin_view_with_invalid_next(self):
+        """
+        If the value of "next" is not a real URL, this should not raise
+        an exception
+        """
+        response = self.client.post(reverse('userena_signin'),
+                                    data={'identification': 'john@example.com',
+                                          'password': 'blowfish',
+                                          'next': 'something-fake'},
+                                    follow=True)
+        self.assertEqual(response.status_code, 404)
 
     def test_signout_view(self):
         """ A ``GET`` to the signout view """
