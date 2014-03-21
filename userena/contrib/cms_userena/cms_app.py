@@ -2,7 +2,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 from django.utils.importlib import import_module
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 from cms.app_base import CMSApp
 from cms.apphook_pool import apphook_pool
