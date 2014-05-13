@@ -34,6 +34,10 @@ USERENA_ACTIVATION_NOTIFY_DAYS = getattr(settings,
                                          'USERENA_ACTIVATION_NOTIFY_DAYS',
                                          5)
 
+USERENA_ACTIVATION_RETRY = getattr(settings,
+                                    'USERENA_ACTIVATION_RETRY',
+                                    False)
+
 USERENA_ACTIVATED = getattr(settings,
                             'USERENA_ACTIVATED',
                             'ALREADY_ACTIVATED')
@@ -83,6 +87,10 @@ USERENA_DISABLE_PROFILE_LIST = getattr(settings,
                                        'USERENA_DISABLE_PROFILE_LIST',
                                        False)
 
+USERENA_DISABLE_SIGNUP = getattr(settings,
+                                 'USERENA_DISABLE_SIGNUP',
+                                 False)
+
 USERENA_USE_MESSAGES = getattr(settings,
                                'USERENA_USE_MESSAGES',
                                True)
@@ -102,3 +110,11 @@ USERENA_PROFILE_LIST_TEMPLATE = getattr(
     settings, 'USERENA_PROFILE_LIST_TEMPLATE', 'userena/profile_list.html')
 
 USERENA_HIDE_EMAIL = getattr(settings, 'USERENA_HIDE_EMAIL', False)
+
+USERENA_HTML_EMAIL = getattr(settings, 'USERENA_HTML_EMAIL', False)
+
+USERENA_USE_PLAIN_TEMPLATE = getattr(settings, 'USERENA_USE_PLAIN_TEMPLATE', not USERENA_HTML_EMAIL)
+
+USERENA_REGISTER_PROFILE = getattr(settings, 'USERENA_REGISTER_PROFILE', True)
+
+USERENA_REGISTER_USER = getattr(settings, 'USERENA_REGISTER_USER', True)

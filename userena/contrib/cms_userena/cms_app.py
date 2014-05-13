@@ -12,6 +12,7 @@ from userena.views import profile_detail
 from .settings import USERENA_CMS_AUTO_REGISTER_APPHOOK
 from .cms_menu import UserenaMenu
 
+
 class classproperty(property):
     """ Taken from http://stackoverflow.com/questions/128573/using-property-on-classmethods """
     def __get__(self, cls, owner):
@@ -46,7 +47,8 @@ class UserenaApphook(CMSApp):
         # "Default" view is needed for DjangoCMS, otherwise when the user navigates
         # to the page this app is attached, s/he will get a 404
         return [
-            patterns('',
+            patterns(
+                '',
                 url(r'^$', lambda request: profile_detail(request, request.user.username), name="userena_cms_default")
             ),
             userena_urlpatterns

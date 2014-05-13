@@ -1,17 +1,21 @@
+import re
+
+from datetime import datetime, timedelta
 from django.core.urlresolvers import reverse
 from django.core import mail
 from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
+from django.test import TestCase
+from django.test.utils import override_settings
 
 from userena import forms
 from userena import settings as userena_settings
-from userena.tests.profiles.test import ProfileTestCase
 from userena.utils import get_user_model
 
 User = get_user_model()
 
 
-class UserenaViewsTests(ProfileTestCase):
+class UserenaViewsTests(TestCase):
     """ Test the account views """
     fixtures = ['users', 'profiles']
 
@@ -32,6 +36,65 @@ class UserenaViewsTests(ProfileTestCase):
 
         user = User.objects.get(email='alice@example.com')
         self.failUnless(user.is_active)
+
+    def test_activation_expired_retry(self):
+        """ A ``GET`` to the activation view when activation link is expired """
+        # First, register an account.
+        userena_settings.USERENA_ACTIVATION_RETRY = True
+        self.client.post(reverse('userena_signup'),
+                         data={'username': 'alice',
+                               'email': 'alice@example.com',
+                               'password1': 'swordfish',
+                               'password2': 'swordfish',
+                               'tos': 'on'})
+        user = User.objects.get(email='alice@example.com')
+        user.date_joined = datetime.today() - timedelta(days=30)
+        user.save()
+        response = self.client.get(reverse('userena_activate',
+                                           kwargs={'activation_key': user.userena_signup.activation_key}))
+        self.assertContains(response, "Request a new activation link")
+
+        user = User.objects.get(email='alice@example.com')
+        self.failUnless(not user.is_active)
+        userena_settings.USERENA_ACTIVATION_RETRY = False
+
+    def test_retry_activation_ask(self):
+        """ Ask for a new activation link """
+        # First, register an account.
+        userena_settings.USERENA_ACTIVATION_RETRY = True
+        self.client.post(reverse('userena_signup'),
+                         data={'username': 'alice',
+                               'email': 'alice@example.com',
+                               'password1': 'swordfish',
+                               'password2': 'swordfish',
+                               'tos': 'on'})
+        user = User.objects.get(email='alice@example.com')
+        user.date_joined = datetime.today() - timedelta(days=30)
+        user.save()
+        old_key = user.userena_signup.activation_key
+        response = self.client.get(reverse('userena_activate_retry',
+                                           kwargs={'activation_key': old_key}))
+
+        # We must reload the object from database to get the new key
+        user = User.objects.get(email='alice@example.com')
+        self.assertContains(response, "Account re-activation succeeded")
+
+        self.failIfEqual(old_key, user.userena_signup.activation_key)
+        user = User.objects.get(email='alice@example.com')
+        self.failUnless(not user.is_active)
+
+        self.failUnlessEqual(len(mail.outbox), 2)
+        self.assertEqual(mail.outbox[1].to, ['alice@example.com'])
+        self.assertTrue(mail.outbox[1].body.find("activate your account ")>-1)
+
+        response = self.client.get(reverse('userena_activate',
+                                           kwargs={'activation_key': user.userena_signup.activation_key}))
+        self.assertRedirects(response,
+                             reverse('userena_profile_detail', kwargs={'username': user.username}))
+
+        user = User.objects.get(email='alice@example.com')
+        self.failUnless(user.is_active)
+        userena_settings.USERENA_ACTIVATION_RETRY = False
 
     def test_invalid_activation(self):
         """
@@ -70,6 +133,10 @@ class UserenaViewsTests(ProfileTestCase):
         """ A ``GET`` to the ``disabled`` view """
         response = self.client.get(reverse('userena_disabled',
                                            kwargs={'username': 'john'}))
+        self.assertEqual(response.status_code, 404)
+        u = User.objects.filter(username='john').update(is_active=False)
+        response = self.client.get(reverse('userena_disabled',
+                                           kwargs={'username': 'john'}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
                                 'userena/disabled.html')
@@ -95,6 +162,15 @@ class UserenaViewsTests(ProfileTestCase):
 
         # Back to default
         userena_settings.USERENA_WITHOUT_USERNAMES = False
+        
+        # Check for 403 with signups disabled
+        userena_settings.USERENA_DISABLE_SIGNUP = True
+        
+        response = self.client.get(reverse('userena_signup'))
+        self.assertEqual(response.status_code, 403)
+        
+        # Back to default
+        userena_settings.USERENA_DISABLE_SIGNUP = False
 
     def test_signup_view_signout(self):
         """ Check that a newly signed user shouldn't be signed in. """
@@ -371,3 +447,39 @@ class UserenaViewsTests(ProfileTestCase):
         userena_settings.USERENA_DISABLE_PROFILE_LIST = True
         response = self.client.get(reverse('userena_profile_list'))
         self.assertEqual(response.status_code, 404)
+
+    def test_password_reset_view_success(self):
+        """ A ``POST`` to the password reset view with email that exists"""
+        response = self.client.post(reverse('userena_password_reset'),
+                                    data={'email': 'john@example.com',})
+        # check if there was success redirect to userena_password_reset_done
+        # and email was sent
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('userena_password_reset_done'), str(response))
+        self.assertTrue(mail.outbox)
+
+    def test_password_reset_view_failure(self):
+        """ A ``POST`` to the password reset view with incorrect email"""
+        response = self.client.post(reverse('userena_password_reset'),
+                                    data={'email': 'no.such.user@example.com',})
+        # note: status code can be different depending on django version
+        self.assertIn(response.status_code, [200, 302])
+        self.assertFalse(mail.outbox)
+
+    def test_password_reset_confirm(self):
+        # post reset request and search form confirmation url
+        self.client.post(reverse('userena_password_reset'),
+                         data={'email': 'john@example.com',})
+        confirm_mail = mail.outbox[0]
+        confirm_url = re.search(r'\bhttps?://\S+', confirm_mail.body).group()
+
+        # get confirmation request page
+        response = self.client.get(confirm_url)
+        self.assertEqual(response.status_code, 200)
+
+        # post new password and check if redirected with success
+        response = self.client.post(confirm_url,
+                                    data={'new_password1': 'pass',
+                                          'new_password2': 'pass',})
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('userena_password_reset_complete'), str(response))
