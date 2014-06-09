@@ -82,13 +82,8 @@ urlpatterns = patterns('',
        name='userena_email_confirm'),
 
     # Disabled account
-<<<<<<< HEAD
-    url(r'^(?P<username>[\.\w]+)/disabled/$',
-       userena_views.direct_to_user_template,
-=======
     url(r'^(?P<username>[\.\w-]+)/disabled/$',
        userena_views.disabled_account,
->>>>>>> 3c89b4e71755f38ab88d0354117d06b583f9770e
        {'template_name': 'userena/disabled.html'},
        name='userena_disabled'),
 
